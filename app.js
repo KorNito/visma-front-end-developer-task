@@ -65,6 +65,12 @@ class UI {
     document.querySelector(".toppings-input").value = "";
     document.querySelector(".photo-input").value = "";
   };
+
+  static removePizza = (element) => {
+    if (element.classList.contains("delete-button")) {
+      element.parentElement.remove();
+    }
+  };
 }
 
 document.addEventListener("DOMContentLoaded", UI.displayPizzas);
@@ -83,4 +89,8 @@ document.querySelector(".form").addEventListener("submit", (event) => {
   UI.addPizza(pizza);
 
   UI.clearFormInputs();
+});
+
+document.querySelector(".pizza-list").addEventListener("click", (event) => {
+  UI.removePizza(event.target);
 });
