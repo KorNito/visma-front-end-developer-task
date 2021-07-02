@@ -6,5 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pizza Menu</title>
   </head>
-  <body></body>
+  <body>
+    <form class="form">
+      <label for="name">Name</label>
+      <input class="name-input" name="name" type="text" maxlength="30" />
+      <span class="name-error"></span>
+      <label for="price">Price</label>
+      <input
+        class="price-input"
+        name="price"
+        type="number"
+        min="0.01"
+        step="0.01"
+      />
+      <span class="price-error"></span>
+      <label for="heat">Heat</label>
+      <input
+        class="heat-input"
+        name="heat"
+        type="range"
+        min="1"
+        max="3"
+        value="0"
+      />
+      <span class="heat-error"></span>
+      <label for="toppings">Toppings</label>
+      <select class="toppings-input" name="toppings" type="text" required>
+        <option>Vegetables</option>
+        <option>Herbs</option>
+        <option>Spices</option>
+        <option>Sea Food</option>
+        <option>Cheese</option>
+        <option>Meats</option>
+      </select>
+      <span class="toppings-error"></span>
+      <label for="photo">Photo</label>
+      <select name="pizza-filter">
+        <option></option>
+        <option></option>
+        <option></option>
+        <option></option>
+      </select>
+      <span class="photo-error"></span>
+
+      <button class="add-pizza-button" type="submit">Add pizza</button>
+    </form>
+    <div class="pizza-menu">
+      <div class="pizza-filter-container">
+        <select name="pizza-filter">
+          <option>Name</option>
+          <option>Price</option>
+          <option>Heat</option>
+        </select>
+      </div>
+      <div class="pizza-list-container">
+        <ul class="pizza-list"></ul>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
 </html>
