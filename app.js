@@ -60,3 +60,17 @@ class UI {
 }
 
 document.addEventListener("DOMContentLoaded", UI.displayPizzas);
+
+document.querySelector(".form").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const name = document.querySelector(".name-input").value;
+  const price = document.querySelector(".price-input").value;
+  const heat = document.querySelector(".heat-input").value;
+  const toppings = document.querySelector(".toppings-input").value;
+  const photo = document.querySelector(".photo-input").value;
+
+  const pizza = new Pizza(name, price, heat, toppings, photo);
+
+  UI.addPizza(pizza);
+});
