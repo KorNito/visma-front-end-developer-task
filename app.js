@@ -57,6 +57,14 @@ class UI {
 
     pizzaList.appendChild(pizzaDiv);
   }
+
+  static clearFormInputs = () => {
+    document.querySelector(".name-input").value = "";
+    document.querySelector(".price-input").value = "";
+    document.querySelector(".heat-input").value = "";
+    document.querySelector(".toppings-input").value = "";
+    document.querySelector(".photo-input").value = "";
+  };
 }
 
 document.addEventListener("DOMContentLoaded", UI.displayPizzas);
@@ -73,4 +81,6 @@ document.querySelector(".form").addEventListener("submit", (event) => {
   const pizza = new Pizza(name, price, heat, toppings, photo);
 
   UI.addPizza(pizza);
+
+  UI.clearFormInputs();
 });
