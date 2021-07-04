@@ -12,9 +12,7 @@ class Validator {
   static validateInputsOnSubmit(
     nameInputValue,
     priceInputValue,
-    heatInputValue,
-    toppingsInputValue,
-    photoInputValue
+    toppingsInputValue
   ) {
     if (nameInputValue.trim() === "") {
       UI.showErrorMessage(".name-error", "Name is required");
@@ -38,6 +36,11 @@ class Validator {
       return true;
     }
 
+    if (toppingsInputValue.length < 2) {
+      UI.showErrorMessage(".toppings-error", "Minimum of 2 toppings required");
+      return true;
+    }
+
     return false;
   }
 }
@@ -46,52 +49,62 @@ class UI {
   static displayPizzas() {
     const pizzas = Storage.getPizzas();
 
-    pizzas.forEach((pizza) => UI.addPizza(pizza));
+    pizzas.forEach((pizza) => UI.addPizzaToList(pizza));
   }
 
-  static addPizza(pizza) {
-    const pizzaList = document.querySelector(".pizza-list");
+  static addPizzaToList(pizza) {
+    const list = document.querySelector(".pizza-list");
 
-    const pizzaDiv = document.createElement("div");
-    pizzaDiv.classList.add("pizza");
+    const listItem = document.createElement("li");
+    listItem.classList.add("pizza");
 
-    const pizzaLi = document.createElement("li");
-    pizzaLi.classList.add("pizza-item");
-
-    pizzaLi.innerHTML = `
-        <img class="pizza-photo" src="${pizza.photo}">
-        <p class="pizza-name">Name: ${pizza.name}<p/>
-        <p class="pizza-price">Price: ${pizza.price}$<p/>
-        <p class="pizza-heat">Heat: ${pizza.heat}<p/>
-        <p class="pizza-toppings">Toppings: ${pizza.toppings}<p/>
-        `;
-    pizzaDiv.appendChild(pizzaLi);
+    listItem.innerHTML = `
+      <img class="pizza-photo" src="${pizza.photo}" alt="${pizza.name}">
+      <p class="pizza-name">${pizza.name}</p>
+      <p>Price: ${pizza.price}$</p>
+      <p>Heat:${pizza.heat}</p>
+      <p>Toppings: ${pizza.toppings}</p>
+    `;
 
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("delete-button");
     deleteButton.innerText = "Delete";
-    pizzaDiv.appendChild(deleteButton);
+    listItem.appendChild(deleteButton);
 
-    pizzaList.appendChild(pizzaDiv);
+    list.appendChild(listItem);
+  }
+
+  static deletePizza(element) {
+    if (element.classList.contains("delete-button")) {
+      element.parentElement.remove();
+    }
+  }
+
+  static clearInputFields() {
+    const name = (document.querySelector(".name-input").value = "");
+    const price = (document.querySelector(".price-input").value = "");
+    const heat = (document.querySelector(".heat-input").value = 1);
+    const form = document.querySelector(".form");
+    const inputs = form.getElementsByTagName("input");
+    for (let i = 0, max = inputs.length; i < max; i++) {
+      if (inputs[i].type === "checkbox") {
+        inputs[i].checked = false;
+      }
+    }
+    const photo = (document.querySelector(".photo-input").value = "");
+
+    UI.clearErrorMessages();
   }
 
   static showErrorMessage(className, message) {
     document.querySelector(className).innerText = message;
   }
 
-  static clearFormInputs = () => {
-    document.querySelector(".name-input").value = "";
-    document.querySelector(".price-input").value = "";
-    document.querySelector(".heat-input").value = 1;
-    document.querySelector(".toppings-input").value = "";
-    document.querySelector(".photo-input").value = "";
-  };
-
-  static removePizza = (element) => {
-    if (element.classList.contains("delete-button")) {
-      element.parentElement.remove();
-    }
-  };
+  static clearErrorMessages() {
+    document.querySelector(".name-error").innerText = "";
+    document.querySelector(".price-error").innerText = "";
+    document.querySelector(".toppings-error").innerText = "";
+  }
 }
 
 class Storage {
@@ -102,27 +115,22 @@ class Storage {
     } else {
       pizzas = JSON.parse(localStorage.getItem("pizzas"));
     }
-
     return pizzas;
   }
 
   static addPizza(pizza) {
     const pizzas = Storage.getPizzas();
-
     pizzas.push(pizza);
-
     localStorage.setItem("pizzas", JSON.stringify(pizzas));
   }
 
   static removePizza(name) {
     const pizzas = Storage.getPizzas();
-
     pizzas.forEach((pizza, index) => {
       if (pizza.name === name) {
         pizzas.splice(index, 1);
       }
     });
-
     localStorage.setItem("pizzas", JSON.stringify(pizzas));
   }
 }
@@ -130,22 +138,24 @@ class Storage {
 document.addEventListener("DOMContentLoaded", UI.displayPizzas);
 
 document.querySelector(".form").addEventListener("submit", (event) => {
+  event.preventDefault();
+
   const name = document.querySelector(".name-input").value;
   const price = document.querySelector(".price-input").value;
   const heat = document.querySelector(".heat-input").value;
-  const toppings = document.querySelector(".toppings-input").value;
+  const form = document.querySelector(".form");
+  const inputs = form.getElementsByTagName("input");
+  const toppings = [];
+
+  for (let i = 0, max = inputs.length; i < max; i++) {
+    if (inputs[i].type === "checkbox" && inputs[i].checked) {
+      toppings.push(inputs[i].value);
+    }
+  }
+
   const photo = document.querySelector(".photo-input").value;
 
-  const incorrectInputs = Validator.validateInputsOnSubmit(
-    name,
-    price,
-    heat,
-    toppings,
-    photo
-  );
-
-  if (incorrectInputs) {
-    event.preventDefault();
+  if (Validator.validateInputsOnSubmit(name, price, toppings)) {
   } else {
     const priceAsANumber = parseFloat(price);
     const heatAsANumber = parseInt(heat);
@@ -158,21 +168,16 @@ document.querySelector(".form").addEventListener("submit", (event) => {
       photo
     );
 
-    UI.addPizza(pizza);
+    UI.addPizzaToList(pizza);
 
     Storage.addPizza(pizza);
 
-    UI.clearFormInputs();
+    UI.clearInputFields();
   }
 });
 
 document.querySelector(".pizza-list").addEventListener("click", (event) => {
-  let result = confirm("Are you sure to delete?");
-  if (result) {
-    UI.removePizza(event.target);
-  }
+  UI.deletePizza(event.target);
 
-  Storage.removePizza(
-    event.target.previousElementSibling.children[0].textContent
-  );
+  Storage.removePizza(event.target.parentElement.children[1].textContent);
 });
