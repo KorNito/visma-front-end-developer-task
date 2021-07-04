@@ -58,6 +58,10 @@ class UI {
     pizzaList.appendChild(pizzaDiv);
   }
 
+  static showErrorMessage(className, message) {
+    document.querySelector(className).innerText = message;
+  }
+
   static clearFormInputs = () => {
     document.querySelector(".name-input").value = "";
     document.querySelector(".price-input").value = "";
@@ -84,11 +88,19 @@ document.querySelector(".form").addEventListener("submit", (event) => {
   const toppings = document.querySelector(".toppings-input").value;
   const photo = document.querySelector(".photo-input").value;
 
-  const pizza = new Pizza(name, price, heat, toppings, photo);
+  if (name === "") {
+    UI.showErrorMessage(".name-error", "Name is required");
+  } else if (price === "") {
+    UI.showErrorMessage(".price-error", "Price is required");
+  } else if (toppings === "") {
+    UI.showErrorMessage(".toppings-error", "Toppings are required");
+  } else {
+    const pizza = new Pizza(name, price, heat, toppings, photo);
 
-  UI.addPizza(pizza);
+    UI.addPizza(pizza);
 
-  UI.clearFormInputs();
+    UI.clearFormInputs();
+  }
 });
 
 document.querySelector(".pizza-list").addEventListener("click", (event) => {
