@@ -216,13 +216,7 @@ document.querySelector(".pizza-list").addEventListener("click", (event) => {
   }
 });
 
-document.querySelector(".pizza-filter").addEventListener("onChange", () => {
-  console.log("test");
-});
-
-const pizzaSelect = document.querySelector(".pizza-filter");
-
-pizzaSelect.addEventListener("change", (event) => {
+document.querySelector(".pizza-filter").addEventListener("change", (event) => {
   const filterValue = event.target.value;
 
   const filteredList = UI.filterByValue(filterValue);
