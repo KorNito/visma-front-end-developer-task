@@ -24,7 +24,8 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.form input {
+.form input,
+.form select {
   display: block;
   padding: 0.5rem;
   border-radius: 6px;
@@ -37,4 +38,33 @@ body {
   background: #4f005f;
   color: white;
   padding: 0.25rem 1;
+}
+
+.pizza-menu {
+  margin: 2rem;
+}
+
+.pizza-list-container {
+  margin-top: 2rem;
+}
+
+.pizza-filter-container {
+  margin: 2rem;
+}
+
+.pizza-list {
+  display: flex;
+  list-style-type: none;
+}
+
+.pizza {
+  margin-left: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 10rem;
+}
+
+.pizza-photo {
+  width: 100%;
+  height: 150px;
 }

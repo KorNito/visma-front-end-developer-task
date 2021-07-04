@@ -61,9 +61,9 @@ class UI {
     listItem.innerHTML = `
       <img class="pizza-photo" src="${pizza.photo}" alt="${pizza.name}">
       <p class="pizza-name">${pizza.name}</p>
-      <p>Price: ${pizza.price}$</p>
-      <p>Heat:${pizza.heat}</p>
-      <p>Toppings: ${pizza.toppings}</p>
+      <p class="pizza-price">Price: ${pizza.price}$</p>
+      <p class="pizza-heat">Heat: ${pizza.heat}</p>
+      <p class="pizza-toppings">Toppings: ${pizza.toppings.join(", ")}</p>
     `;
 
     const deleteButton = document.createElement("button");
@@ -104,6 +104,35 @@ class UI {
     document.querySelector(".name-error").innerText = "";
     document.querySelector(".price-error").innerText = "";
     document.querySelector(".toppings-error").innerText = "";
+  }
+
+  static deleteConfirmation(pizzaName) {
+    return confirm(`Are you sure you want to delete ${pizzaName}?`);
+  }
+
+  static filterByValue(value) {
+    const storedPizzas = Storage.getPizzas();
+    let sortedList = [];
+
+    switch (value) {
+      case "name":
+        sortedList = storedPizzas.sort(
+          (a, b) => a.name.toLowerCase() - b.name.toLowerCase()
+        );
+        break;
+      case "price":
+        sortedList = storedPizzas.sort((a, b) => a.price - b.price);
+        break;
+      case "heat":
+        sortedList = storedPizzas.sort((a, b) => a.heat - b.heat);
+        break;
+      default:
+        sortedList = storedPizzas.sort(
+          (a, b) => a.name.toLowerCase() - b.name.toLowerCase()
+        );
+    }
+
+    return sortedList;
   }
 }
 
@@ -177,7 +206,30 @@ document.querySelector(".form").addEventListener("submit", (event) => {
 });
 
 document.querySelector(".pizza-list").addEventListener("click", (event) => {
-  UI.deletePizza(event.target);
+  const targetedElementPizzaName =
+    event.target.parentElement.children[1].textContent;
 
-  Storage.removePizza(event.target.parentElement.children[1].textContent);
+  if (UI.deleteConfirmation(targetedElementPizzaName)) {
+    UI.deletePizza(event.target);
+
+    Storage.removePizza(targetedElementPizzaName);
+  }
+});
+
+document.querySelector(".pizza-filter").addEventListener("onChange", () => {
+  console.log("test");
+});
+
+const pizzaSelect = document.querySelector(".pizza-filter");
+
+pizzaSelect.addEventListener("change", (event) => {
+  const filterValue = event.target.value;
+
+  const filteredList = UI.filterByValue(filterValue);
+
+  oldList = document.querySelector(".pizza-list");
+
+  oldList.innerHTML = "";
+
+  filteredList.forEach((pizza) => UI.addPizzaToList(pizza));
 });
