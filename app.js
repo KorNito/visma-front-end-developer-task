@@ -8,6 +8,40 @@ class Pizza {
   }
 }
 
+class Validator {
+  static validateInputsOnSubmit(
+    nameInputValue,
+    priceInputValue,
+    heatInputValue,
+    toppingsInputValue,
+    photoInputValue
+  ) {
+    if (nameInputValue.trim() === "") {
+      UI.showErrorMessage(".name-error", "Name is required");
+      return true;
+    } else {
+      const storedPizzas = Storage.getPizzas();
+
+      for (let i = storedPizzas.length - 1; i > -1; i--) {
+        if (storedPizzas[i].name === nameInputValue.trim()) {
+          UI.showErrorMessage(".name-error", "Name must be unique");
+          return true;
+        }
+      }
+    }
+
+    if (priceInputValue.trim() === "") {
+      UI.showErrorMessage(".price-error", "Price is required");
+      return true;
+    } else if (priceInputValue < 0.01) {
+      UI.showErrorMessage(".price-error", "Price must be above 0");
+      return true;
+    }
+
+    return false;
+  }
+}
+
 class UI {
   static displayPizzas() {
     const pizzas = Storage.getPizzas();
@@ -25,11 +59,11 @@ class UI {
     pizzaLi.classList.add("pizza-item");
 
     pizzaLi.innerHTML = `
-        <p class="pizza-name">${pizza.name}<p/>
-        <p>${pizza.price}<p/>
-        <p>${pizza.heat}<p/>
-        <p>${pizza.toppings}<p/>
-        <p>${pizza.photo}<p/>
+        <p class="pizza-photo">${pizza.photo}<p/>
+        <p class="pizza-name">Name: ${pizza.name}<p/>
+        <p class="pizza-price">Price: ${pizza.price}$<p/>
+        <p class="pizza-heat">Heat: ${pizza.heat}<p/>
+        <p class="pizza-toppings">Toppings: ${pizza.toppings}<p/>
         `;
     pizzaDiv.appendChild(pizzaLi);
 
@@ -48,7 +82,7 @@ class UI {
   static clearFormInputs = () => {
     document.querySelector(".name-input").value = "";
     document.querySelector(".price-input").value = "";
-    document.querySelector(".heat-input").value = "";
+    document.querySelector(".heat-input").value = 1;
     document.querySelector(".toppings-input").value = "";
     document.querySelector(".photo-input").value = "";
   };
@@ -96,22 +130,33 @@ class Storage {
 document.addEventListener("DOMContentLoaded", UI.displayPizzas);
 
 document.querySelector(".form").addEventListener("submit", (event) => {
-  event.preventDefault();
-
   const name = document.querySelector(".name-input").value;
   const price = document.querySelector(".price-input").value;
   const heat = document.querySelector(".heat-input").value;
   const toppings = document.querySelector(".toppings-input").value;
   const photo = document.querySelector(".photo-input").value;
 
-  if (name === "") {
-    UI.showErrorMessage(".name-error", "Name is required");
-  } else if (price === "") {
-    UI.showErrorMessage(".price-error", "Price is required");
-  } else if (toppings === "") {
-    UI.showErrorMessage(".toppings-error", "Toppings are required");
+  const incorrectInputs = Validator.validateInputsOnSubmit(
+    name,
+    price,
+    heat,
+    toppings,
+    photo
+  );
+
+  if (incorrectInputs) {
+    event.preventDefault();
   } else {
-    const pizza = new Pizza(name, price, heat, toppings, photo);
+    const priceAsANumber = parseFloat(price);
+    const heatAsANumber = parseInt(heat);
+
+    const pizza = new Pizza(
+      name,
+      priceAsANumber,
+      heatAsANumber,
+      toppings,
+      photo
+    );
 
     UI.addPizza(pizza);
 
