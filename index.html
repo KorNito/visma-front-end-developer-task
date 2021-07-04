@@ -8,51 +8,61 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <form class="form">
-      <label for="name">Name</label>
-      <input class="name-input" name="name" type="text" maxlength="30" />
-      <span class="name-error"></span>
-      <label for="price">Price</label>
-      <input
-        class="price-input"
-        name="price"
-        type="number"
-        min="0.01"
-        step="0.01"
-      />
-      <span class="price-error"></span>
-      <label for="heat">Heat</label>
-      <input
-        class="heat-input"
-        name="heat"
-        type="range"
-        min="1"
-        max="3"
-        value="0"
-      />
-      <span class="heat-error"></span>
-      <label for="toppings">Toppings</label>
-      <select class="toppings-input" name="toppings" type="text" required>
-        <option>Vegetables</option>
-        <option>Herbs</option>
-        <option>Spices</option>
-        <option>Sea Food</option>
-        <option>Cheese</option>
-        <option>Meats</option>
-      </select>
-      <span class="toppings-error"></span>
-      <label for="photo">Photo</label>
-      <input class="photo-input" name="photo" type="text"> </input>
-      <span class="photo-error"></span>
-
-      <button class="add-pizza-button" type="submit">Add pizza</button>
-    </form>
+    <div class="form-container">
+      <form class="form">
+        <label for="name">Name</label>
+        <input class="name-input" name="name" type="text" maxlength="30" />
+        <span class="name-error"></span>
+        <label for="price">Price</label>
+        <input class="price-input" name="price" type="number" step="0.01" />
+        <span class="price-error"></span>
+        <label for="heat">Heat</label>
+        <input
+          class="heat-input"
+          name="heat"
+          type="range"
+          min="1"
+          max="3"
+          value="1"
+        />
+        <span class="heat-error"></span>
+        <label for="toppings">Toppings</label>
+        <select class="toppings-input" name="toppings" type="text" required>
+          <option>Pepperoni</option>
+          <option>Mushrooms</option>
+          <option>Sausage</option>
+          <option>Onions</option>
+          <option>Bacon</option>
+          <option>Cheese</option>
+          <option>Peppers</option>
+          <option>Black Olives</option>
+          <option>Chicken</option>
+          <option>Pineapple</option>
+          <option>Spinach</option>
+          <option>Fresh Basil</option>
+          <option>Ham</option>
+          <option>Pesto</option>
+        </select>
+        <span class="toppings-error"></span>
+        <label for="photo">Photo</label>
+        <select class="photo-input" name="photo" type="text">
+          <option value="assets/PizzaPhotos/Pizza1.jpeg">Pizza1</option>
+          <option value="assets/PizzaPhotos/Pizza2.jpeg">Pizza2</option>
+          <option value="assets/PizzaPhotos/Pizza3.jpeg">Pizza3</option>
+          <option value="assets/PizzaPhotos/Pizza4.jpeg">Pizza4</option>
+          <option value="assets/PizzaPhotos/Pizza5.jpeg">Pizza5</option>
+        </select>
+        <span class="photo-error"></span>
+        <button class="add-pizza-button" type="submit">Add pizza</button>
+      </form>
+    </div>
     <div class="pizza-menu">
       <div class="pizza-filter-container">
-        <select name="pizza-filter">
-          <option>Name</option>
-          <option>Price</option>
-          <option>Heat</option>
+        <p>Sort by</p>
+        <select class="pizza-filter">
+          <option value="name">Name</option>
+          <option value="price">Price</option>
+          <option value="heat">Heat</option>
         </select>
       </div>
       <div class="pizza-list-container">

@@ -59,7 +59,7 @@ class UI {
     pizzaLi.classList.add("pizza-item");
 
     pizzaLi.innerHTML = `
-        <p class="pizza-photo">${pizza.photo}<p/>
+        <img class="pizza-photo" src="${pizza.photo}">
         <p class="pizza-name">Name: ${pizza.name}<p/>
         <p class="pizza-price">Price: ${pizza.price}$<p/>
         <p class="pizza-heat">Heat: ${pizza.heat}<p/>
