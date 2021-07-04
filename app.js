@@ -122,7 +122,10 @@ document.querySelector(".form").addEventListener("submit", (event) => {
 });
 
 document.querySelector(".pizza-list").addEventListener("click", (event) => {
-  UI.removePizza(event.target);
+  let result = confirm("Are you sure to delete?");
+  if (result) {
+    UI.removePizza(event.target);
+  }
 
   Storage.removePizza(
     event.target.previousElementSibling.children[0].textContent
