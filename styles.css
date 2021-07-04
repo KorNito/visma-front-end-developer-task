@@ -9,62 +9,169 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.name-error,
+.price-error,
+.toppings-error {
+  margin-bottom: 1rem;
+  color: #e65100;
+  width: 100%;
+  display: block;
+  margin-top: 0.5rem;
+}
+
 .form-container {
   margin: 2rem auto;
   padding: 1rem;
-  width: 20rem;
+  width: 30rem;
   max-width: 50rem;
   border-radius: 12px;
-  background-color: lavender;
+  background-color: #82b1ff;
+  display: flex;
+  flex-direction: column;
 }
 
-.form label {
-  display: block;
+.name-label,
+.price-label,
+.heat-label,
+.toppings-label,
+.photo-label {
+  margin-top: 2rem;
   font-weight: bold;
-  margin-bottom: 0.5rem;
 }
 
-.form input,
-.form select {
-  display: block;
+.name-input,
+.price-input,
+.heat-input,
+form select {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
   padding: 0.5rem;
   border-radius: 6px;
   border: 1px solid #ccc;
   width: 100%;
 }
 
+.chilli-pepper-img-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.toppings {
+  width: 200px;
+  margin: auto;
+}
+
+.toppings label {
+}
+
+.toppings input {
+  width: 40%;
+}
+
+.toppings input:hover {
+  cursor: pointer;
+}
+
 .form button {
-  border: 1px solid #4f005f;
-  background: #4f005f;
+  font: inherit;
+  cursor: pointer;
+  padding: 1rem 1rem;
+  border: 1px solid #448aff;
+  background-color: #448aff;
   color: white;
-  padding: 0.25rem 1;
+  border-radius: 12px;
+  margin-left: 21rem;
+}
+
+.form button:hover {
+  border: 1px solid #2962ff;
 }
 
 .pizza-menu {
+  margin: 4rem;
+}
+
+.pizza-filter-container select {
+  padding: 0.25rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 10%;
+}
+
+.pizza-filter-container {
   margin: 2rem;
+  margin-right: 15px;
 }
 
 .pizza-list-container {
   margin-top: 2rem;
 }
 
-.pizza-filter-container {
-  margin: 2rem;
-}
-
 .pizza-list {
   display: flex;
+  flex-flow: row wrap;
   list-style-type: none;
 }
 
 .pizza {
-  margin-left: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  width: 10rem;
+  width: 12rem;
+  margin-right: 2rem;
+  border: solid;
+  border-radius: 11px;
+  margin-top: 2rem;
+}
+
+.pizza-list li {
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.pizza-photo {
+  margin-bottom: 1rem;
+}
+
+.pizza-name {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
 }
 
 .pizza-photo {
   width: 100%;
   height: 150px;
+  transition: 0.5s ease;
+  border-radius: 8px;
+}
+
+.pizza-price,
+.pizza-heat,
+.pizza-toppings {
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+  text-align: left;
+  align-items: left;
+  justify-content: left;
+}
+
+.delete-button {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font: inherit;
+  cursor: pointer;
+  padding: 0.35rem 0.25rem;
+  border: 1px solid #616161;
+  background-color: #616161;
+  color: white;
+  border-radius: 12px;
+}
+
+.delete-button:hover {
+  border: 1px solid #212121;
+}
+
+.pepper-img {
+  width: 15px;
+  height: 20px;
 }

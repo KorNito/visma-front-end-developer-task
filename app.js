@@ -71,7 +71,7 @@ class UI {
 
     const pizzaPriceParagraph = document.createElement("p");
     pizzaPriceParagraph.classList.add("pizza-price");
-    pizzaPriceParagraph.innerText = `Price: ${pizza.price}`;
+    pizzaPriceParagraph.innerText = `Price: ${pizza.price}$`;
     listItem.appendChild(pizzaPriceParagraph);
 
     const pizzaHeatParagraph = document.createElement("p");
