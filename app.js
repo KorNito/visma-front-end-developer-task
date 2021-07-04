@@ -58,13 +58,37 @@ class UI {
     const listItem = document.createElement("li");
     listItem.classList.add("pizza");
 
-    listItem.innerHTML = `
-      <img class="pizza-photo" src="${pizza.photo}" alt="${pizza.name}">
-      <p class="pizza-name">${pizza.name}</p>
-      <p class="pizza-price">Price: ${pizza.price}$</p>
-      <p class="pizza-heat">Heat: ${pizza.heat}</p>
-      <p class="pizza-toppings">Toppings: ${pizza.toppings.join(", ")}</p>
-    `;
+    const pizzaPhotoImg = document.createElement("img");
+    pizzaPhotoImg.classList.add("pizza-photo");
+    pizzaPhotoImg.src = pizza.photo;
+    pizzaPhotoImg.alt = pizza.name;
+    listItem.appendChild(pizzaPhotoImg);
+
+    const pizzaNameParagraph = document.createElement("p");
+    pizzaNameParagraph.classList.add("pizza-name");
+    pizzaNameParagraph.innerText = pizza.name;
+    listItem.appendChild(pizzaNameParagraph);
+
+    const pizzaPriceParagraph = document.createElement("p");
+    pizzaPriceParagraph.classList.add("pizza-price");
+    pizzaPriceParagraph.innerText = `Price: ${pizza.price}`;
+    listItem.appendChild(pizzaPriceParagraph);
+
+    const pizzaHeatParagraph = document.createElement("p");
+    pizzaHeatParagraph.classList.add("pizza-heat");
+    pizzaHeatParagraph.innerText = "Heat: ";
+    for (let i = 1; i <= pizza.heat; i++) {
+      const pepperImg = document.createElement("img");
+      pepperImg.classList.add("pepper-img");
+      pepperImg.src = "assets/ChilliPepper/ChilliPepper.svg";
+      pizzaHeatParagraph.appendChild(pepperImg);
+    }
+    listItem.appendChild(pizzaHeatParagraph);
+
+    const pizzaToppingsParagraph = document.createElement("p");
+    pizzaToppingsParagraph.classList.add("pizza-toppings");
+    pizzaToppingsParagraph.innerText = `Toppings: ${pizza.toppings.join(", ")}`;
+    listItem.appendChild(pizzaToppingsParagraph);
 
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("delete-button");
