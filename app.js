@@ -60,6 +60,9 @@ class UI {
 
     const pizzaPhotoImg = document.createElement("img");
     pizzaPhotoImg.classList.add("pizza-photo");
+    if (pizza.photo === "") {
+      pizzaPhotoImg.src = "assets/PizzaPhotos/Pizza1.jpeg";
+    }
     pizzaPhotoImg.src = pizza.photo;
     pizzaPhotoImg.alt = pizza.name;
     listItem.appendChild(pizzaPhotoImg);
